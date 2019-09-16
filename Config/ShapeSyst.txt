@@ -1,2 +1,5 @@
-shape       ewk         top         qcd         sig
-jec         1           1           1           1
+shape           ewk         top         qcd         sig
+jec             1           1           1           1
+jer             1           1           1           1   
+prefire         1           1           1           1   
+muRFcorrdNewSig -           -           -           1

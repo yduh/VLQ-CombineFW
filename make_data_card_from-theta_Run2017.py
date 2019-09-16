@@ -69,7 +69,7 @@ for inputPath in glob.glob(option.inputDir+option.pattern):
             if syst not in categoryDict[catStr].sampleDict[sample].systList: categoryDict[catStr].sampleDict[sample].systList.append(BaseObject(syst,hist=obj,vary=varyMap[vary]))
 
     # __________________________________________________________________ ||
-    lnSystFile      = "Config/TestSyst.txt"
+    lnSystFile      = "Config/NormSyst.txt"
     shapeSystFile   = "Config/ShapeSyst.txt"
     shapeStr        = "shapes * * {fileName} $CHANNEL/$PROCESS $CHANNEL/$PROCESS_$SYSTEMATIC\n"
 
