@@ -37,6 +37,9 @@ varyMap = {
         }
 
 zero = 1E-12
+autoMCStatsLine = "* autoMCStats 10."
+# Ref: https://cms-analysis.github.io/HiggsAnalysis-CombinedLimit/part2/bin-wise-stats/
+
 # __________________________________________________________________ ||
 for inputPath in glob.glob(option.inputDir+option.pattern):
     print "-"*40
@@ -103,7 +106,7 @@ for inputPath in glob.glob(option.inputDir+option.pattern):
         shapeSystReader = ShapeSystReader()
         bin.systList += shapeSystReader.makeShapeSyst(bin.shapeSystFile)
     mkdir_p(cardDir)
-    dataCard.makeCard(cardDir,binList)
+    dataCard.makeCard(cardDir,binList,autoMCStatsLine=autoMCStatsLine)
     shapeFilePath = os.path.join(cardDir,signal_name+"_shapes.root")
     outputFile = ROOT.TFile(shapeFilePath,"RECREATE")
     for ibin,bin in enumerate(binList):

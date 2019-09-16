@@ -61,7 +61,7 @@ class DataCard(object):
         line += "\n"
         return line
 
-    def makeCard(self,outputDir,binList,appendToPath=""):
+    def makeCard(self,outputDir,binList,appendToPath="",autoMCStatsLine=""):
         outputStr = ""
 
         self.makeStandardCardDetails(binList)
@@ -91,6 +91,10 @@ class DataCard(object):
         systWriter = SystWriter()
         outputStr += systWriter.makeMCSystLine(binList)
         outputStr += "\n"
+
+        if autoMCStatsLine:
+            outputStr += autoMCStatsLine
+            outputStr += "\n"
 
         outputPath = outputDir+self.makeOutFileName(".txt",appendToPath)
 
