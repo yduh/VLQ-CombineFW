@@ -19,9 +19,15 @@ class SystWriter(object):
                 processList = analysisBin.processList
                 if systematic.skipDC: continue
                 if foundSyst:
-                    outputStr += self.makelnNLine(systematic,processList,analysisBin,lineExist=systName in outputStr,forceDash=False)
+                    if systematic.systType == "lnN":
+                        outputStr += self.makelnNLine(systematic,processList,analysisBin,lineExist=systName in outputStr,forceDash=False)
+                    elif systematic.systType == "shape":
+                        outputStr += self.makeShapeLine(systematic,processList,analysisBin,lineExist=systName in outputStr,forceDash=False)
                 else:
-                    outputStr += self.makelnNLine(systDict[systName],processList,analysisBin,lineExist=systName in outputStr,forceDash=True)
+                    if systematic.systType == "lnN":
+                        outputStr += self.makelnNLine(systDict[systName],processList,analysisBin,lineExist=systName in outputStr,forceDash=True)
+                    elif systematic.systType == "shape":
+                        outputStr += self.makeShapeLine(systDict[systName],processList,analysisBin,lineExist=systName in outputStr,forceDash=True)
             outputStr +="\n"
         return outputStr
 
@@ -49,4 +55,20 @@ class SystWriter(object):
                         correlationStr += "%s\t"%systematic.magnitudeFunc(systematic,systematic.processFunc(eachProcess),analysisBin)
             outputStr += correlationStr
         #outputStr +="\n"
+        return outputStr
+
+    @staticmethod
+    def makeShapeLine(systematic,processList,analysisBin,lineExist=False,forceDash=False,writeNameOnly=False):
+        outputStr = ""
+        if not lineExist:
+            systName = systematic.getSystName() if not systematic.correlation else systematic.correlation(systematic.systNamePrefix,systematic,analysisBin,"",whichType="card")
+            outputStr += systName+"\tshape\t"
+        correlationStr = ""
+        if not writeNameOnly:
+            for eachProcess in processList:
+                if eachProcess.name not in systematic.process or forceDash:
+                    correlationStr += "-\t"
+                elif systematic.magnitudeFunc:
+                    correlationStr += "%s\t"%systematic.magnitudeFunc(systematic,eachProcess.name,analysisBin)
+            outputStr += correlationStr
         return outputStr

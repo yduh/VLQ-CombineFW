@@ -17,7 +17,7 @@ class LogNormalSystReader(object):
             if line.startswith("#"): continue
             #if items[0] in skipSyst: continue
             systDict = {}
-            for i,item in enumerate(items[1:]): 
+            for i,item in enumerate(items[1:]):
                 if item == "-": continue
                 systDict[processes[i]] = 1+float(item)
             lnSyst = lnNSystematic(
@@ -27,4 +27,32 @@ class LogNormalSystReader(object):
                         )
             lnSyst.systDict = systDict
             systList.append(lnSyst)
+        return systList
+
+class ShapeSystReader(object):
+    @staticmethod
+    #def makeLnSyst(inputPath,skipSyst):
+    def makeShapeSyst(inputPath):
+        textFile = open(inputPath,"r")
+        lines = textFile.readlines()
+        systList = []
+        for line in lines:
+            items = line.split()
+            if line.startswith("shape"):
+                processes = deepcopy(items[1:])
+                continue
+            if not items: continue
+            if line.startswith("#"): continue
+            #if items[0] in skipSyst: continue
+            systDict = {}
+            for i,item in enumerate(items[1:]):
+                if item == "-": continue
+                systDict[processes[i]] = float(item)
+            shapeSyst = ShapeSystematic(
+                        items[0],
+                        [ processes[i] for i,item in enumerate(items[1:]) if item != "-"],
+                        lambda syst,procName,anaBin: syst.systDict[procName],
+                        )
+            shapeSyst.systDict = systDict
+            systList.append(shapeSyst)
         return systList

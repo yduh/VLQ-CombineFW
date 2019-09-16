@@ -1,0 +1,2 @@
+shape       ewk         top         qcd         sig
+jec         1           1           1           1

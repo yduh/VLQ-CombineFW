@@ -67,6 +67,7 @@ for inputPath in glob.glob(option.inputDir+option.pattern):
 
     # __________________________________________________________________ ||
     lnSystFile      = "Config/TestSyst.txt"
+    shapeSystFile   = "Config/ShapeSyst.txt"
     shapeStr        = "shapes * * {fileName} $CHANNEL/$PROCESS $CHANNEL/$PROCESS_$SYSTEMATIC\n"
 
     # __________________________________________________________________ ||
@@ -80,7 +81,8 @@ for inputPath in glob.glob(option.inputDir+option.pattern):
     binList = []
     for catStr,cat in categoryDict.iteritems():
         bin = BaseObject(catStr,
-                sysFile=lnSystFile,
+                lnSystFile=lnSystFile,
+                shapeSystFile=shapeSystFile,
                 processList=list(),
                 signalNames=[signal_name,],
                 isSignal=lambda x: x == "sig",
@@ -97,7 +99,9 @@ for inputPath in glob.glob(option.inputDir+option.pattern):
             else:
                 bin.data = process
         lnSystReader = LogNormalSystReader()
-        bin.systList += lnSystReader.makeLnSyst(bin.sysFile)
+        bin.systList += lnSystReader.makeLnSyst(bin.lnSystFile)
+        shapeSystReader = ShapeSystReader()
+        bin.systList += shapeSystReader.makeShapeSyst(bin.shapeSystFile)
     mkdir_p(cardDir)
     dataCard.makeCard(cardDir,binList)
     shapeFilePath = os.path.join(cardDir,signal_name+"_shapes.root")
