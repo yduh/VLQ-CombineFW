@@ -1,6 +1,7 @@
 ### VLQ-CombineFW
 
 << Part 1. Set up Combine >>
+
     export SCRAM_ARCH=slc6_amd64_gcc530
     cmsrel CMSSW_8_1_0
     cd CMSSW_8_1_0/src
