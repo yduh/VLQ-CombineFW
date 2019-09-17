@@ -14,4 +14,4 @@
     git checkout v7.0.13
     scramv1 b clean; scramv1 b
 
-   ## Keep it updated according to the reference: https://cms-analysis.github.io/HiggsAnalysis-CombinedLimit/#slc6cc7-release-cmssw_8_1_x
+  Keep it updated according to the reference: https://cms-analysis.github.io/HiggsAnalysis-CombinedLimit/#slc6cc7-release-cmssw_8_1_x
