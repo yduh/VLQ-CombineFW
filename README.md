@@ -14,14 +14,14 @@
     git checkout v7.0.13
     scramv1 b clean; scramv1 b
 
-  - Keep it updated according to the reference: https://cms-analysis.github.io/HiggsAnalysis-CombinedLimit/#slc6cc7-release-cmssw_8_1_x
+  - Keep it updated by yourself, follow the reference: https://cms-analysis.github.io/HiggsAnalysis-CombinedLimit/#slc6cc7-release-cmssw_8_1_x
   
   
-<< Part 2. Set up VLQ-ComobineFW >>
+### Part 2. Set up VLQ-ComobineFW
 
      git clone git@github.com:yduh/VLQ-CombineFW.git
      
-<< Part 3. Generate data cards & Apply fits & Draw results >>
+### Part 3. Generate data cards & Apply fits & Draw results
 
 - After setting up everything, having target root files ready, and finishing the edit for systematics. Do:
 
