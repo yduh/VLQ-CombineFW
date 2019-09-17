@@ -69,8 +69,10 @@ for inputPath in glob.glob(option.inputDir+option.pattern):
             if syst not in categoryDict[catStr].sampleDict[sample].systList: categoryDict[catStr].sampleDict[sample].systList.append(BaseObject(syst,hist=obj,vary=varyMap[vary]))
 
     # __________________________________________________________________ ||
-    lnSystFile      = "Config/NormSyst.txt"
-    shapeSystFile   = "Config/ShapeSyst.txt"
+    lnSystElectronFile      = "Config/NormSystElectron.txt"
+    lnSystMuonFile      = "Config/NormSystMuon.txt"
+    shapeSystElectronFile   = "Config/ShapeSystElectron.txt"
+    shapeSystMuonFile   = "Config/ShapeSystMuon.txt"
     shapeStr        = "shapes * * {fileName} $CHANNEL/$PROCESS $CHANNEL/$PROCESS_$SYSTEMATIC\n"
 
     # __________________________________________________________________ ||
@@ -83,6 +85,8 @@ for inputPath in glob.glob(option.inputDir+option.pattern):
     writeObjDict = {}
     binList = []
     for catStr,cat in categoryDict.iteritems():
+        lnSystFile = lnSystElectronFile if 'isE' in catStr else lnSystMuonFile
+        shapeSystFile = shapeSystElectronFile if 'isE' in catStr else shapeSystMuonFile
         bin = BaseObject(catStr,
                 lnSystFile=lnSystFile,
                 shapeSystFile=shapeSystFile,
