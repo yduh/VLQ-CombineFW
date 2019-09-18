@@ -26,12 +26,15 @@ This framework helps you to generate data cards, prepare commands for Higgs-Comb
     
         source setup.sh
         
-2. Edit Config/NormSyst.txt and Config/ShapeSyst.txt for your systematics. 
+2. Edit Config/NormSystElectron.txt, Config/NormSystMuon.txt and Config/ShapeSystElectron.txt, Config/ShapeSystMuon.txt for your systematics. You can keep electron/muon channel systematics are the same or make them differently.
+
 3. Edit mk_all.sh for your purpose. Have input root files ready. Then do:
  
         ./mk_all.sh
 
     - It runs with Asymptotic Frequentist Limits, which is fairly accurate when the event yields are not too small and the systematic uncertainties don't play a major role in the result, more details can be found in https://cms-analysis.github.io/HiggsAnalysis-CombinedLimit/part3/commonstatsmethods/
+    - Input root files can contain more histograms than you need. Only MC components defined in 'make_data_card_from-theta.py' and systematics assignned in 'Config' will be included in data cards.
+    - Option '--removeCategory' supports removing some of the fitting categories. It's handy and usful for test or optimization without re-preparing input root files.
 
 4. To draw the limit exclusion plot, for example, you can do:
 
