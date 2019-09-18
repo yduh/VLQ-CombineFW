@@ -1,6 +1,6 @@
 ## VLQ-CombineFW
 
-### Part 1. Set up Combine 
+### Part 1. Set up Higgs-Combine-package 
 
     export SCRAM_ARCH=slc6_amd64_gcc530
     cmsrel CMSSW_8_1_0
@@ -17,15 +17,18 @@
   - Keep it updated by yourself, follow the reference: https://cms-analysis.github.io/HiggsAnalysis-CombinedLimit/#slc6cc7-release-cmssw_8_1_x
   
   
-### Part 2. Set up VLQ-ComobineFW
+### Part 2. Set up VLQ-ComobineFW (this framework)
 
      git clone git@github.com:yduh/VLQ-CombineFW.git
      
 ### Part 3. Generate data cards & Apply fits & Draw results
 
-- After setting up everything, having target root files ready, and finishing the edit for systematics. Do:
+- Edit the work space to your CMSSW directory, set up the environment:
 
         source setup.sh
+        
+- Edit Config/NormSyst.txt and Config/ShapeSyst.txt for your systematics. Have input root files ready. Edit mk_all.sh as well. Then do:
+ 
         ./mk_all.sh
 
 - To draw the limit exclusion plot, for example, can do:
