@@ -14,7 +14,7 @@
     git checkout v7.0.13
     scramv1 b clean; scramv1 b
     
-    - Keep it updated by yourself, follow the reference: https://cms-analysis.github.io/HiggsAnalysis-CombinedLimit/#slc6cc7-release-cmssw_8_1_x
+   - Keep it updated by yourself, follow the reference: https://cms-analysis.github.io/HiggsAnalysis-CombinedLimit/#slc6cc7-release-cmssw_8_1_x
   
 ### Part 2. Set up VLQ-ComobineFW (this framework)
 This framework helps you to generate data cards, prepare commands for Higgs-Combine-package, and make plots.
