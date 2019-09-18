@@ -20,10 +20,11 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--inputDir",action="store")
 parser.add_argument("--outputDir",action="store")
 parser.add_argument("--pattern",action="store")
-parser.add_argument("--verbose",action="store_true")
+parser.add_argument("--removeCategory",nargs="+")
 option = parser.parse_args()
 
 # __________________________________________________________________ ||
+# To match Combine naming conovention
 nameMap = {
             "sig": "sig",
             "top": "top",
@@ -36,9 +37,18 @@ varyMap = {
             "minus": "Down",
         }
 
-zero = 1E-12
+zero = 1E-12 #in case if any bin is null, Combine requires a total sum of each bin > 0
+
+# __________________________________________________________________ ||
 autoMCStatsLine = "* autoMCStats 10."
+# Bin-by-bin statistics uncertainty is included. Vary the number depends on your need
 # Ref: https://cms-analysis.github.io/HiggsAnalysis-CombinedLimit/part2/bin-wise-stats/
+
+# Where systematics are assignned
+lnSystElectronFile      = "Config/NormSystElectron.txt"
+lnSystMuonFile      = "Config/NormSystMuon.txt"
+shapeSystElectronFile   = "Config/ShapeSystElectron.txt"
+shapeSystMuonFile   = "Config/ShapeSystMuon.txt"
 
 # __________________________________________________________________ ||
 for inputPath in glob.glob(option.inputDir+option.pattern):
@@ -68,15 +78,8 @@ for inputPath in glob.glob(option.inputDir+option.pattern):
         else:
             if syst not in categoryDict[catStr].sampleDict[sample].systList: categoryDict[catStr].sampleDict[sample].systList.append(BaseObject(syst,hist=obj,vary=varyMap[vary]))
 
-    # __________________________________________________________________ ||
-    lnSystElectronFile      = "Config/NormSystElectron.txt"
-    lnSystMuonFile      = "Config/NormSystMuon.txt"
-    shapeSystElectronFile   = "Config/ShapeSystElectron.txt"
-    shapeSystMuonFile   = "Config/ShapeSystMuon.txt"
-    shapeStr        = "shapes * * {fileName} $CHANNEL/$PROCESS $CHANNEL/$PROCESS_$SYSTEMATIC\n"
-
-    # __________________________________________________________________ ||
     config = CardConfig(signal_name)
+    shapeStr        = "shapes * * {fileName} $CHANNEL/$PROCESS $CHANNEL/$PROCESS_$SYSTEMATIC\n"
     config.shapeStr = shapeStr.format(fileName=signal_name+"_shapes.root")
     dataCard = DataCard(config)
     cardDir = option.outputDir+"/"+dataCard.makeOutFileName("/","")
@@ -97,6 +100,11 @@ for inputPath in glob.glob(option.inputDir+option.pattern):
                 rateParams=[],
                 parameterList=[],
                 )
+
+        selectCatFunc = lambda cat: (cat.name not in option.removeCategory) if option.removeCategory else (True)
+        if not selectCatFunc(cat):
+            print catStr+' is removed'
+            continue
         binList.append(bin)
         for sampleName,sample in cat.sampleDict.iteritems():
             count,error = getIntegral(sample.hist)
