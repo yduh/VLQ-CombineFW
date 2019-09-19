@@ -34,7 +34,8 @@ This framework helps you to generate data cards, prepare commands for Higgs-Comb
 
     - It runs with Asymptotic Frequentist Limits, which is fairly accurate when the event yields are not too small and the systematic uncertainties don't play a major role in the result, more details can be found in https://cms-analysis.github.io/HiggsAnalysis-CombinedLimit/part3/commonstatsmethods/
     - Input root files can contain more histograms than you need. Only MC components defined in 'make_data_card_from-theta.py' and systematics assignned in 'Config' will be included in data cards.
-    - Option '--removeCategory' supports removing some of the fitting categories. It's handy and usful for test or optimization without re-preparing input root files.
+    - Bin-by-bin uncertainty has been included automatically when generating data cards using 'autoMCStats', reference https://cms-analysis.github.io/HiggsAnalysis-CombinedLimit/part2/bin-wise-stats/
+    - Option '--removeCategory' supports to remove some categories from a fit. It's handy for test or optimization without re-preparing input root files.
 
 4. To draw the limit exclusion plot, for example, you can do:
 
