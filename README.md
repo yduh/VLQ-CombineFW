@@ -56,16 +56,16 @@ To draw the signbificance plot, for example, you can do:
 
 Besides, the following figures are commonly required for analysis review:
 
-   1. Nuisasnce difference before and after the fit
-    
+   - Nuisasnce difference before and after the fit
+          
     combine -M FitDiagnostics ${inputWs}.root --saveShapes --saveWithUncertainties --saveOverallShapes -t -1
     python PlotScript/plotNuisances.py --inputPath ${outputDir}${inputWs}/fitDiagnostics.root --outputPath ${outputDir}/plots/DiffNuisances.pdf
         
-   2. Nuisance correlation
+   - Nuisance correlation
     
     python PlotScript/makeSimpleCorrHist.py --inputPath ${outputDir}${inputWs}/fitDiagnostics.root --outputPath ${outputDir}/plots/Correlation.pdf
     
-   3. Nuisance impacts (it takes longer)
+   - Nuisance impacts (it takes longer)
 
     ${harvestBase}combineTool.py -M Impacts --doInitialFit -d ${inputWs}.root -s ${seed} -m 125 -t -1
     ${harvestBase}combineTool.py -M Impacts --doFit -d ${inputWs}.root -s ${seed} --parallel 4 -m 125 -t -1
@@ -75,7 +75,7 @@ Besides, the following figures are commonly required for analysis review:
 
 For any other requests above the list, you can always make it yourself by getting the fitting results from the corresponding root files.   
 
-A collection of commands to make plots above is in plotter.sh, do:
+A collection of commands to make the plots above is in plotter.sh, do:
 
     ./plotter.sh
     
