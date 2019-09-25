@@ -8,13 +8,13 @@ from Physics.TpTp_XS import *
 ROOT.gROOT.SetBatch(ROOT.kTRUE)
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--inputDir",action="store")
+parser.add_argument("--inputPath",action="store")
 parser.add_argument("--outputPath",action="store")
 parser.add_argument("--selectStr",action="store",default="")
 
 option = parser.parse_args()
 
-inputDir = option.inputDir
+inputPath = option.inputPath
 
 # ________________________________________________________________ ||
 # CMS style
@@ -59,7 +59,7 @@ def calculate(r_value,window_value,what):
 outDict = OrderedDict()
 for quantile in quantiles:
     outDict[quantile] = OrderedDict()
-for cardDir in glob.glob(inputDir+"*"+option.selectStr+"*/"):
+for cardDir in glob.glob(inputPath+"*"+option.selectStr+"*/"):
     print "Reading directory "+cardDir
     inputFile = ROOT.TFile(cardDir+"higgsCombineTest.AsymptoticLimits.mH120.root","READ")
     tree = inputFile.Get("limit")

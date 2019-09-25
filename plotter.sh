@@ -3,8 +3,8 @@
 # ==============================================================================
 # Give the path of your input root files (from Analyzer) and the output folder
 # ==============================================================================
-inputDir=temp_Test/
-outputDir=temp_Test/
+inputPath=temp_Test/
+outputPath=temp_Test/
 
 seed=123456
 
@@ -18,19 +18,19 @@ harvestBase=${HCTBASE}/src/CombineHarvester/CombineTools/scripts/
 # Limit exclusion plots
 # ===================================
 # B(tH) = B(tZ) = 0.5, doublet
-#python PlotScript/plotLimit.py --inputDir ${inputDir} --outputPath ${outputDir}/plots/ExpLimit-TTM_bW0p0_tZ0p5_tH0p5.pdf --selectStr=bW0p0_tZ0p5_tH0p5
+#python PlotScript/plotLimit.py --inputPath ${inputPath} --outputPath ${outputPath}/plots/ExpLimit-TTM_bW0p0_tZ0p5_tH0p5.pdf --selectStr=bW0p0_tZ0p5_tH0p5
 
 ## B(bW) = 2B(tZ,tH) = 0.5, Singlet
-#python PlotScript/plotLimit.py --inputDir ${inputDir} --outputPath ${outputDir}/plots/ExpLimit-TTM_bW0p5_tZ0p25_tH0p25.pdf --selectStr=bW0p5_tZ0p25_tH0p25
+#python PlotScript/plotLimit.py --inputPath ${inputPath} --outputPath ${outputPath}/plots/ExpLimit-TTM_bW0p5_tZ0p25_tH0p25.pdf --selectStr=bW0p5_tZ0p25_tH0p25
 
 ## B(bW) = 1.0
-#python PlotScript/plotLimit.py --inputDir ${inputDir} --outputPath ${outputDir}/plots/ExpLimit-TTM_bW1p0_tZ0p0_tH0p0.pdf --selectStr=bW1p0_tZ0p0_tH0p0
+#python PlotScript/plotLimit.py --inputPath ${inputPath} --outputPath ${outputPath}/plots/ExpLimit-TTM_bW1p0_tZ0p0_tH0p0.pdf --selectStr=bW1p0_tZ0p0_tH0p0
 
 ## B(tH) = 1.0
-#python PlotScript/plotLimit.py --inputDir ${inputDir} --outputPath ${outputDir}/plots/ExpLimit-TTM_bW0p0_tZ0p0_tH1p0.pdf --selectStr=bW0p0_tZ0p0_tH1p0
+#python PlotScript/plotLimit.py --inputPath ${inputPath} --outputPath ${outputPath}/plots/ExpLimit-TTM_bW0p0_tZ0p0_tH1p0.pdf --selectStr=bW0p0_tZ0p0_tH1p0
 
 ## B(tZ) = 1.0
-#python PlotScript/plotLimit.py --inputDir ${inputDir} --outputPath ${outputDir}/plots/ExpLimit-TTM_bW0p0_tZ1p0_tH0p0.pdf --selectStr=bW0p0_tZ1p0_tH0p0
+#python PlotScript/plotLimit.py --inputPath ${inputPath} --outputPath ${outputPath}/plots/ExpLimit-TTM_bW0p0_tZ1p0_tH0p0.pdf --selectStr=bW0p0_tZ1p0_tH0p0
 
 
 
@@ -45,12 +45,12 @@ harvestBase=${HCTBASE}/src/CombineHarvester/CombineTools/scripts/
 # ===================================================================================================
 #inputWs=TTM1100_bW0p0_tZ0p5_tH0p5
 
-#cd ${outputDir}${inputWs}
+#cd ${outputPath}${inputWs}
 #combine -M FitDiagnostics ${inputWs}.root --saveShapes --saveWithUncertainties --saveOverallShapes --numToysForShapes 200 -s ${seed} -t -1
 #cd - 
 
-#python PlotScript/plotNuisances.py --inputPath ${outputDir}${inputWs}/fitDiagnostics.root --outputPath ${outputDir}/plots/DiffNuisances.pdf
-#python PlotScript/makeSimpleCorrHist.py --inputPath ${outputDir}${inputWs}/fitDiagnostics.root --outputPath ${outputDir}/plots/Correlation.pdf
+#python PlotScript/plotNuisances.py --inputPath ${outputPath}${inputWs}/fitDiagnostics.root --outputPath ${outputPath}/plots/DiffNuisances.pdf
+#python PlotScript/makeSimpleCorrHist.py --inputPath ${outputPath}${inputWs}/fitDiagnostics.root --outputPath ${outputPath}/plots/Correlation.pdf
 
 
 
@@ -61,8 +61,8 @@ harvestBase=${HCTBASE}/src/CombineHarvester/CombineTools/scripts/
 # ========================================================================================================
 inputWs=TTM1100_bW0p0_tZ0p5_tH0p5
 
-mkdir -p ${outputDir}${inputWs}/impacts
-cd ${outputDir}${inputWs}/impacts
+mkdir -p ${outputPath}${inputWs}/impacts
+cd ${outputPath}${inputWs}/impacts
 ${harvestBase}combineTool.py -M Impacts --doInitialFit -d ../${inputWs}.root -s ${seed} -m 125 -t -1 
 #--minimizerStrategyForMinos 1 --minimizerToleranceForMinos 5.001e-06
 ${harvestBase}combineTool.py -M Impacts --doFits -d ../${inputWs}.root -s ${seed} --parallel 4 -m 125 -t -1
@@ -70,7 +70,7 @@ ${harvestBase}combineTool.py -M Impacts -d ../${inputWs}.root -o impacts.json -m
 cd -
 
 postfit=Asimov
-python PlotScript/plotImpacts.py -i ${outputDir}${inputWs}/impacts.json -o ${outputDir}/plots/Impact${postfix}.pdf
+python PlotScript/plotImpacts.py -i ${outputPath}${inputWs}/impacts.json -o ${outputPath}/plots/Impact${postfix}.pdf
 
 
 
