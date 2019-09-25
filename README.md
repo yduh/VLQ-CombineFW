@@ -58,12 +58,12 @@ Besides, the following figures are commonly required for analysis review:
 
    - Nuisasnce difference before and after the fit
           
-    combine -M FitDiagnostics ${inputWs}.root --saveShapes --saveWithUncertainties --saveOverallShapes -t -1
-    python PlotScript/plotNuisances.py --inputPath ${outputDir}${inputWs}/fitDiagnostics.root --outputPath ${outputDir}/plots/DiffNuisances.pdf
+         combine -M FitDiagnostics ${inputWs}.root --saveShapes --saveWithUncertainties --saveOverallShapes -t -1
+         python PlotScript/plotNuisances.py --inputPath ${outputDir}${inputWs}/fitDiagnostics.root --outputPath ${outputDir}/plots/DiffNuisances.pdf
         
    - Nuisance correlation
     
-    python PlotScript/makeSimpleCorrHist.py --inputPath ${outputDir}${inputWs}/fitDiagnostics.root --outputPath ${outputDir}/plots/Correlation.pdf
+         python PlotScript/makeSimpleCorrHist.py --inputPath ${outputDir}${inputWs}/fitDiagnostics.root --outputPath ${outputDir}/plots/Correlation.pdf
     
    - Nuisance impacts (it takes longer)
 
