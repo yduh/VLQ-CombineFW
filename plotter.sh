@@ -59,18 +59,17 @@ harvestBase=${HCTBASE}/src/CombineHarvester/CombineTools/scripts/
 # (run combineTool 3 times, so totally 3 x (# of nuisances) of fits will be applied, it takes longer)
 # Outputs from fit are higgsCombine_paramFit_Test_<<NUISANCE>>.MultiDimFit.mH125.root
 # ========================================================================================================
-inputWs=TTM1100_bW0p0_tZ0p5_tH0p5
+#inputWs=TTM1100_bW0p0_tZ0p5_tH0p5
 
-mkdir -p ${outputPath}${inputWs}/impacts
-cd ${outputPath}${inputWs}/impacts
-${harvestBase}combineTool.py -M Impacts --doInitialFit -d ../${inputWs}.root -s ${seed} -m 125 -t -1 
-#--minimizerStrategyForMinos 1 --minimizerToleranceForMinos 5.001e-06
-${harvestBase}combineTool.py -M Impacts --doFits -d ../${inputWs}.root -s ${seed} --parallel 4 -m 125 -t -1
-${harvestBase}combineTool.py -M Impacts -d ../${inputWs}.root -o impacts.json -m 125 -t -1
-cd -
+#mkdir -p ${outputPath}${inputWs}/impacts
+#cd ${outputPath}${inputWs}/impacts
+#${harvestBase}combineTool.py -M Impacts --doInitialFit -d ../${inputWs}.root -s ${seed} -m 125 -t -1 
+#${harvestBase}combineTool.py -M Impacts --doFits -d ../${inputWs}.root -s ${seed} --parallel 4 -m 125 -t -1
+#${harvestBase}combineTool.py -M Impacts -d ../${inputWs}.root -o impacts.json -m 125 -t -1
+#cd -
 
-postfit=Asimov
-python PlotScript/plotImpacts.py -i ${outputPath}${inputWs}/impacts.json -o ${outputPath}/plots/Impact${postfix}.pdf
+#postfit=Asimov
+#python PlotScript/plotImpacts.py -i ${outputPath}${inputWs}/impacts.json -o ${outputPath}/plots/Impact${postfix}.pdf
 
 
 

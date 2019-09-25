@@ -21,7 +21,7 @@ nuisList = []
 nBinsX = fullCorrHist.GetNbinsX()
 for ibinX in range(1,nBinsX+1):
     nuisName = fullCorrHist.GetXaxis().GetBinLabel(ibinX)
-    if "prob_bin" in nuisName: continue
+    if "prop_bin" in nuisName: continue
     nuisList.append((nuisName,ibinX))
 
 hist = ROOT.TH2D("simple_correlation","simple_correlation",len(nuisList),-0.5,len(nuisList)-0.5,len(nuisList),-0.5,len(nuisList)-0.5)
@@ -35,8 +35,8 @@ for ibinX,(nuisName_i,i) in enumerate(nuisList):
 c = ROOT.TCanvas()
 hist.SetStats(0)
 hist.GetZaxis().SetRangeUser(-1.,1.)
-hist.GetXaxis().SetLabelSize(0.02)
-hist.GetYaxis().SetLabelSize(0.02)
+hist.GetXaxis().SetLabelSize(0.04)
+hist.GetYaxis().SetLabelSize(0.04)
 hist.Draw("colz")
 if not os.path.exists(os.path.abspath(os.path.dirname(option.outputPath))):
     os.makedirs(os.path.abspath(os.path.dirname(option.outputPath)))
