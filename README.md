@@ -50,11 +50,11 @@ This framework helps you to generate data cards, prepare commands for Higgs-Comb
 
 To draw the limit exclusion plot, for example, you can do:
 
-    python PlotScript/plotLimit.py --inputDir temp/ --outputPath temp/limit/test_ExpLimit-TTM_bW0p5_tZ0p25_tH0p25.pdf --selectStr=bW0p5_tZ0p25_tH0p25
+    python PlotScript/plotLimit.py --inputPath ${inputPath} --outputPath ${outputPath}/limit/ExpLimit-TTM_bW0p5_tZ0p25_tH0p25.pdf --selectStr=bW0p5_tZ0p25_tH0p25
 
 To draw the significance plot, for example, you can do:
 
-    python PlotScript/ --inputDir temp/ --outputPath temp/limit/test_ExpLimit-TTM_bW0p5_tZ0p25_tH0p25.pdf --selectStr=bW0p5_tZ0p25_tH0p25
+    python PlotScript/ --inputPath ${inputPath} --outputPath ${outputPath}/limit/ExpLimit-TTM_bW0p5_tZ0p25_tH0p25.pdf --selectStr=bW0p5_tZ0p25_tH0p25
 
 Besides, the following figures are commonly required for analysis review:
 
