@@ -7,28 +7,35 @@ inputDir=temp_Test/
 outputDir=temp_Test/
 
 seed=123456
+
+###
+cd ${HCTBASE}
+eval `scramv1 runtime -sh`
+cd -
+
+harvestBase=${HCTBASE}/src/CombineHarvester/CombineTools/scripts/
 # ===================================
 # Limit exclusion plots
 # ===================================
 # B(tH) = B(tZ) = 0.5, doublet
-#python PlotScript/plotLimit.py --inputDir ${inputDir} --outputPath ${outputDir}/plots/limit/ExpLimit-TTM_bW0p0_tZ0p5_tH0p5.pdf --selectStr=bW0p0_tZ0p5_tH0p5
+#python PlotScript/plotLimit.py --inputDir ${inputDir} --outputPath ${outputDir}/plots/ExpLimit-TTM_bW0p0_tZ0p5_tH0p5.pdf --selectStr=bW0p0_tZ0p5_tH0p5
 
 ## B(bW) = 2B(tZ,tH) = 0.5, Singlet
-#python PlotScript/plotLimit.py --inputDir ${inputDir} --outputPath ${outputDir}/plots/limit/ExpLimit-TTM_bW0p5_tZ0p25_tH0p25.pdf --selectStr=bW0p5_tZ0p25_tH0p25
+#python PlotScript/plotLimit.py --inputDir ${inputDir} --outputPath ${outputDir}/plots/ExpLimit-TTM_bW0p5_tZ0p25_tH0p25.pdf --selectStr=bW0p5_tZ0p25_tH0p25
 
 ## B(bW) = 1.0
-#python PlotScript/plotLimit.py --inputDir ${inputDir} --outputPath ${outputDir}/plots/limit/ExpLimit-TTM_bW1p0_tZ0p0_tH0p0.pdf --selectStr=bW1p0_tZ0p0_tH0p0
+#python PlotScript/plotLimit.py --inputDir ${inputDir} --outputPath ${outputDir}/plots/ExpLimit-TTM_bW1p0_tZ0p0_tH0p0.pdf --selectStr=bW1p0_tZ0p0_tH0p0
 
 ## B(tH) = 1.0
-#python PlotScript/plotLimit.py --inputDir ${inputDir} --outputPath ${outputDir}/plots/limit/ExpLimit-TTM_bW0p0_tZ0p0_tH1p0.pdf --selectStr=bW0p0_tZ0p0_tH1p0
+#python PlotScript/plotLimit.py --inputDir ${inputDir} --outputPath ${outputDir}/plots/ExpLimit-TTM_bW0p0_tZ0p0_tH1p0.pdf --selectStr=bW0p0_tZ0p0_tH1p0
 
 ## B(tZ) = 1.0
-#python PlotScript/plotLimit.py --inputDir ${inputDir} --outputPath ${outputDir}/plots/limit/ExpLimit-TTM_bW0p0_tZ1p0_tH0p0.pdf --selectStr=bW0p0_tZ1p0_tH0p0
+#python PlotScript/plotLimit.py --inputDir ${inputDir} --outputPath ${outputDir}/plots/ExpLimit-TTM_bW0p0_tZ1p0_tH0p0.pdf --selectStr=bW0p0_tZ1p0_tH0p0
 
 
 
 # ===================================================================================================
-# Plot for nuisances difference
+# Plot for nuisances difference & correlation
 # This is reported when r assumed to be 0 (b-only)
 # So only performing any one of the signal model fit is enough. All the nuisances differences on each signal mass and branching fraction are the same. 
 #
@@ -37,32 +44,33 @@ seed=123456
 # --saveOverallShapes: to save covariance between all bins across all channels
 # ===================================================================================================
 #inputWs=TTM1100_bW0p0_tZ0p5_tH0p5
-#cd ${outputDir}${inputWs}
 
-#combine -M FitDiagnostics ${inputWs}.root --saveShapes --saveWithUncertainties --saveOverallShapes -t -1
+#cd ${outputDir}${inputWs}
+#combine -M FitDiagnostics ${inputWs}.root --saveShapes --saveWithUncertainties --saveOverallShapes --numToysForShapes 200 -s ${seed} -t -1
 #cd - 
 
 #python PlotScript/plotNuisances.py --inputPath ${outputDir}${inputWs}/fitDiagnostics.root --outputPath ${outputDir}/plots/DiffNuisances.pdf
+#python PlotScript/makeSimpleCorrHist.py --inputPath ${outputDir}${inputWs}/fitDiagnostics.root --outputPath ${outputDir}/plots/Correlation.pdf
 
 
 
-# ================================================
-# Impact plots (run combineTool 3 times) 
-# ================================================
+# ========================================================================================================
+# Impact plots 
+# (run combineTool 3 times, so totally 3 x (# of nuisances) of fits will be applied, it takes longer)
+# Outputs from fit are higgsCombine_paramFit_Test_<<NUISANCE>>.MultiDimFit.mH125.root
+# ========================================================================================================
 inputWs=TTM1100_bW0p0_tZ0p5_tH0p5
-cd ${outputDir}${inputWs}
 
-${HCTBASE}/src/CombineHarvester/CombineTools/scripts/combineTool.py -M Impacts --doInitialFit -d ${inputWs}.root -s ${seed} -t -1
-#-m 125 --minimizerStrategyForMinos 1 --minimizerToleranceForMinos 5.001e-06
-${HCTBase}/src/CombineHarvester/CombineTools/scripts/combineTool.py -M Impacts --doFit -d ${inputWs}.root -s ${seed} --parallel 4 -t -1
-${HCTBase}/src/CombineHarvester/CombineTools/scripts/combineTool.py -M Impacts -d ${inputWs}.root -o ${outputDir}${inputWs}/impacts.json -t -1
-cd-
+mkdir -p ${outputDir}${inputWs}/impacts
+cd ${outputDir}${inputWs}/impacts
+${harvestBase}combineTool.py -M Impacts --doInitialFit -d ../${inputWs}.root -s ${seed} -m 125 -t -1 
+#--minimizerStrategyForMinos 1 --minimizerToleranceForMinos 5.001e-06
+${harvestBase}combineTool.py -M Impacts --doFits -d ../${inputWs}.root -s ${seed} --parallel 4 -m 125 -t -1
+${harvestBase}combineTool.py -M Impacts -d ../${inputWs}.root -o impacts.json -m 125 -t -1
+cd -
 
 postfit=Asimov
-python PlotScripts/plotImpacts.py ${outputDir}${inputWs}/impacts.json -o ${outputDir}/plots/Impact${postfix}.pdf
+python PlotScript/plotImpacts.py -i ${outputDir}${inputWs}/impacts.json -o ${outputDir}/plots/Impact${postfix}.pdf
 
 
 
-# ================================================
-# Correlation plot 
-# ================================================
