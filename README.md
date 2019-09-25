@@ -73,9 +73,9 @@ Besides, the following figures are commonly required for analysis review:
          python PlotScripts/plotImpacts.py ${outputDir}${inputWs}/impacts.json -o ${outputDir}/plots/Impact${postfix}.pdf
     
 
-For any other plotting requests, you can always customize plots by editing the plotters to get the fitting results from the corresponding root files.
+For any other plotting requests, you can always customize plots by editing the plotters, getting the fitting results from the corresponding root files.
 
-A collection of commands to make the plots above is in plotter.sh, do:
+A collection of commands to make the plots above is plotter.sh. Do:
 
     ./plotter.sh
     
