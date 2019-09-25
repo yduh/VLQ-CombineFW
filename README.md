@@ -67,10 +67,10 @@ Besides, the following figures are commonly required for analysis review:
     
    - Nuisance impacts (it takes longer)
 
-    ${harvestBase}combineTool.py -M Impacts --doInitialFit -d ${inputWs}.root -s ${seed} -m 125 -t -1
-    ${harvestBase}combineTool.py -M Impacts --doFit -d ${inputWs}.root -s ${seed} --parallel 4 -m 125 -t -1
-    ${harvestBase}combineTool.py -M Impacts -d ${inputWs}.root -o ${outputDir}${inputWs}/impacts.json -m 125 -t -1
-    python PlotScripts/plotImpacts.py ${outputDir}${inputWs}/impacts.json -o ${outputDir}/plots/Impact${postfix}.pdf
+         ${harvestBase}combineTool.py -M Impacts --doInitialFit -d ${inputWs}.root -s ${seed} -m 125 -t -1
+         ${harvestBase}combineTool.py -M Impacts --doFit -d ${inputWs}.root -s ${seed} --parallel 4 -m 125 -t -1
+         ${harvestBase}combineTool.py -M Impacts -d ${inputWs}.root -o ${outputDir}${inputWs}/impacts.json -m 125 -t -1
+         python PlotScripts/plotImpacts.py ${outputDir}${inputWs}/impacts.json -o ${outputDir}/plots/Impact${postfix}.pdf
     
 
 For any other requests above the list, you can always make it yourself by getting the fitting results from the corresponding root files.   
